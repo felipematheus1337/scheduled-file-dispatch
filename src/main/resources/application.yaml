@@ -20,6 +20,14 @@ spring:
     port: ${RABBITMQ_PORT:5672}
     username: "${RABBITMQ_USER}"
     password: "${RABBITMQ_PASSWORD}"
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+      observation-enabled: true
+    listener:
+      simple:
+        observation-enabled: true
 
   mail:
     host: "${MAIL_HOST:localhost}"
@@ -64,8 +72,8 @@ resilience4j:
   retry:
     instances:
       s3Storage:
-        max-attempts: 3
-        wait-duration: 500ms
+        max-attempts: 2
+        wait-duration: 300ms
 
   circuitbreaker:
     instances:
@@ -75,8 +83,26 @@ resilience4j:
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10s
         permitted-number-of-calls-in-half-open-state: 3
+      smtp:
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 15s
+        permitted-number-of-calls-in-half-open-state: 2
 
 management:
+  otlp:
+    metrics:
+      export:
+        enabled: false
+  tracing:
+    sampling:
+      probability: 1.0
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: "${OTLP_TRACES_ENDPOINT:http://localhost:4318/v1/traces}"
   endpoints:
     web:
       exposure:

@@ -89,6 +89,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<!-- Micrometer Tracing + bridge OpenTelemetry + exportação OTLP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-opentelemetry</artifactId>
+		</dependency>
 
 		<!-- Segurança e JWT -->
 		<dependency>
