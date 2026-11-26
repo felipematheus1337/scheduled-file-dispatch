@@ -1,16 +1,12 @@
 package scheduled_file_dispatch.v1.application.domain;
 
 import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class AnexoEnvio {
 
     private UUID id;
